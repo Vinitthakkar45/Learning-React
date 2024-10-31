@@ -23,12 +23,24 @@ function App() {
     setCounter((prevCounter) => prevCounter + 1);
   }
 
+  function handleDelete(id) {
+    setNotes((prevNotes) => {
+      return prevNotes.filter((note) => note.id != id);
+    });
+  }
+
   return (
     <div>
       <Header />
       <CreateArea addNote={handleAddNote} />
       {notes.map((note) => (
-        <Note key={note.id} title={note.title} content={note.content} />
+        <Note
+          key={note.id}
+          id={note.id}
+          title={note.title}
+          content={note.content}
+          handleDelete={() => handleDelete(note.id)}
+        />
       ))}
       <Footer />
     </div>
