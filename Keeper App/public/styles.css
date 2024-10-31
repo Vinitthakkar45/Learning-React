@@ -28,12 +28,11 @@ footer {
   position: absolute;
   text-align: center;
   bottom: 0;
-  width: 100%;
   height: 2.5rem;
 }
 
 footer p {
-  color: #ccc;
+  color: #8a8a8a89;
 }
 .note {
   background: #fff;
@@ -47,6 +46,8 @@ footer p {
 .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 .note p {
   font-size: 1.1em;
@@ -61,7 +62,7 @@ footer p {
   margin-right: 10px;
   color: #f5ba13;
   border: none;
-  width: 36px;
+  width: 70px;
   height: 36px;
   cursor: pointer;
   outline: none;
@@ -94,9 +95,9 @@ form button {
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
   cursor: pointer;
   outline: none;
 }
