@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import { Fab } from "@mui/material";
 
 function CreateArea(props) {
   const [input, setinput] = useState({
@@ -17,10 +19,10 @@ function CreateArea(props) {
   function handleAddNote(event) {
     event.preventDefault();
     props.addNote(input);
-    setinput(()=>({
-      title :"",
-      content:""
-    }))
+    setinput(() => ({
+      title: "",
+      content: "",
+    }));
   }
 
   return (
@@ -39,7 +41,26 @@ function CreateArea(props) {
           value={input.content}
           onChange={handleChange}
         />
-        <button>Add</button>
+        <Fab
+          type="submit"
+          color="primary"
+          aria-label="add"
+          sx={{
+            position: "absolute",
+            right: "18px",
+            bottom: "-18px",
+            backgroundColor: "#f5ba13",
+            color: "#fff",
+            width: "50px",
+            height: "50px",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.7)",
+            "&:hover": {
+              backgroundColor: "#f5a013",
+            },
+          }}
+        >
+          <AddIcon />
+        </Fab>
       </form>
     </div>
   );
