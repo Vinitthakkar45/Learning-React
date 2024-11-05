@@ -6,22 +6,11 @@ import Split from "react-split";
 import { nanoid } from "nanoid";
 
 export default function App() {
-  /**
-   * Challenge:
-   * 1. Every time the `notes` array changes, save it
-   *    in localStorage. You'll need to use JSON.stringify()
-   *    to turn the array into a string to save in localStorage.
-   * 2. When the app first loads, initialize the notes state
-   *    with the notes saved in localStorage. You'll need to
-   *    use JSON.parse() to turn the stringified array back
-   *    into a real JS array.
-   */
-
   const [notes, setNotes] = React.useState(
-    ()=>JSON.parse(localStorage.getItem("Notes")) || []
+    () => JSON.parse(localStorage.getItem("Notes")) || []
   );
   const [currentNoteId, setCurrentNoteId] = React.useState(
-    (notes[0] && notes[0].id) || ""
+    (notes[0]?.id) || ""
   );
 
   useEffect(() => {
@@ -33,40 +22,40 @@ export default function App() {
       id: nanoid(),
       body: "# Type your markdown note's title here",
     };
-    setNotes((prevNotes) => [ ...prevNotes, newNote]);
+    setNotes((prevNotes) => [...prevNotes, newNote]);
     setCurrentNoteId(newNote.id);
   }
 
   function updateNote(text) {
-    setNotes((oldNotes) =>
-      oldNotes.map((oldNote) => {
-        return oldNote.id === currentNoteId
-          ? { ...oldNote, body: text }
-          : oldNote;
-      })
-    );
+    setNotes((oldNotes) => {
+      const updatedNote = oldNotes.find((note) => note.id === currentNoteId);
+      const newNote = { ...updatedNote, body: text };
+
+      const otherNotes = oldNotes.filter((note) => note.id !== currentNoteId);
+      return [newNote, ...otherNotes];
+    });
   }
 
-  function findCurrentNote() {
-    return (
-      notes.find((note) => {
-        return note.id === currentNoteId;
-      }) || notes[0]
-    );
+  function deleteNote(event, noteId) {
+    event.stopPropagation();
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id != noteId));
   }
 
+  const currentNote = notes.find(note => note.id === currentNoteId) || notes[0];
+  
   return (
     <main>
       {notes.length > 0 ? (
         <Split sizes={[30, 70]} direction="horizontal" className="split">
           <Sidebar
             notes={notes}
-            currentNote={findCurrentNote()}
+            currentNote={currentNote}
             setCurrentNoteId={setCurrentNoteId}
             newNote={createNewNote}
+            deleteNote={deleteNote}
           />
           {currentNoteId && notes.length > 0 && (
-            <Editor currentNote={findCurrentNote()} updateNote={updateNote} />
+            <Editor currentNote={currentNote} updateNote={updateNote} />
           )}
         </Split>
       ) : (
