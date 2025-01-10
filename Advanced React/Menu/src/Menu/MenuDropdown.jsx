@@ -1,16 +1,8 @@
-export default function MenuDropdown({ items }) {
+export default function MenuDropdown({ children, open}) {
+    console.log(open);
     return (
-        <div className="menu-dropdown">
-            {items.map(
-                item => (
-                    <div
-                        className="menu-item"
-                        key={item}
-                    >
-                        {item}
-                    </div>
-                )
-            )}
+        open && <div className="menu-dropdown">
+            {children}
         </div>
     )
 }
